@@ -16,6 +16,7 @@ const handlebars = require('handlebars'); //修改模版文件内容
  */
 const getType = {
   "simple-component------最简单的组件": "component",
+  "connect-component------connect的组件": "connect-component",
 }
 
 
@@ -51,11 +52,11 @@ if(program.init){
 	}
 }
 if (program.create) {
-	// console.log(program,222)
-	let pathArr = program.create.split('/');
+	let pathArr = program.create.replace('@','src/').split('/');
 	const name = pathArr.pop();
 	pathArr = pathArr.length > 0 ? pathArr.join('/')+'/' : '';
-	console.log(pathArr, name)
+	// pathArr = pathArr.replace('@','src');
+	// console.log(pathArr)
 	if (!re.test(name)) {
 		console.log(symbols.error, chalk.red('错误!请输入英文名称'));
 		return
@@ -69,6 +70,7 @@ if (program.create) {
 					message: '请选择模版类型?',
 					choices: [
 						'simple-component------最简单的组件',
+						'connect-component------connect的组件',
 					],
 				},
 			])
@@ -88,8 +90,11 @@ if (program.create) {
 							if (fs.existsSync(`${fileName}`)) {
 								const content = fs.readFileSync(fileName).toString();
 								const result = handlebars.compile(content)({ template: name, });
-								fs.writeFileSync(fileName.replace('template',name), result);
-								fs.unlinkSync(fileName);
+								fs.writeFileSync(fileName.replace('tmp',name), result);
+								// 删除模板
+								if(fileName === `${pathArr}tmp.tsx`){
+									fs.unlinkSync(fileName);
+								}
 							}
 						}
 						console.log(symbols.success, chalk.green('模版创建成功'));
