@@ -15,7 +15,7 @@ const handlebars = require('handlebars'); //修改模版文件内容
  * 模版对应分支
  */
 const getType = {
-  "react-component------ES6组件": "component",
+  "simple-component------最简单的组件": "component",
 }
 
 
@@ -68,7 +68,7 @@ if (program.create) {
 					name: 'type',
 					message: '请选择模版类型?',
 					choices: [
-						'react-component------ES6组件',
+						'simple-component------最简单的组件',
 					],
 				},
 			])
@@ -93,30 +93,6 @@ if (program.create) {
 							}
 						}
 						console.log(symbols.success, chalk.green('模版创建成功'));
-						// let count = 0; //所有文件修改完成，提示
-						// for (let i = 0; i < files.length; i++) {
-						// 	// if (includes.includes(files[i])) {  //是否需要修改名称
-						// 	// 	continue
-						// 	// }
-						// 	//获取文件列表
-						// 	var index = files[i].indexOf('.');
-						// 	// console.log(index, files, 7777)
-						// 	// console.log(`${pathArr}${files[i]}`,1)
-						// 	// console.log(`${pathArr}${name}${files[i].substring(index)}`,2)
-						// 	fs.rename(
-						// 		`${pathArr}${files[i]}`,
-						// 		`${pathArr}${name}${files[i].substring(index)}`,
-						// 		err => {
-						// 			if (err) {
-						// 				console.log('---错误');
-						// 			}
-						// 			count++;
-						// 			if (count + 1 == files.length) { //排除index.js文件
-						// 				console.log(symbols.success, chalk.green('模版创建成功'));
-						// 			}
-						// 		}
-						// 	);
-						// }
 					}
 				});
 			});
