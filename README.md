@@ -7,7 +7,7 @@
 
 ### 安装
 ```
-npm init beidousat-cli -g
+npm install beidousat-cli -g
 ```
 
 ### 用法
