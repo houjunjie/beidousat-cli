@@ -54,9 +54,9 @@ if(program.init){
 if (program.create) {
 	let pathArr = program.create.replace('@','src/').split('/');
 	const name = pathArr.pop();
-	pathArr = pathArr.length > 0 ? pathArr.join('/')+'/' : '';
+	pathArr = pathArr.length > 0 ? pathArr.join('/')+'/' : './';
 	// pathArr = pathArr.replace('@','src');
-	// console.log(pathArr)
+	// console.log(pathArr)\
 	if (!re.test(name)) {
 		console.log(symbols.error, chalk.red('错误!请输入英文名称'));
 		return
@@ -82,19 +82,21 @@ if (program.create) {
 				download(`houjunjie/beidousat-temp/#${type}`, pathArr, err => {
 					if (err) {
 						spinner.fail();
+						console.log(symbols.error, chalk.red('下载失败'));
+						console.log(err);
 					} else {
 						spinner.succeed();
 						var files = fs.readdirSync(pathArr);
 						for (let i = 0; i < files.length; i++) {
 							let fileName = `${pathArr}${files[i]}`;
-							if (fs.existsSync(`${fileName}`)) {
+							if (fs.existsSync(`${fileName}`) && fileName === `${pathArr}tmp.tsx`) {
 								const content = fs.readFileSync(fileName).toString();
 								const result = handlebars.compile(content)({ template: name, });
 								fs.writeFileSync(fileName.replace('tmp',name), result);
 								// 删除模板
-								if(fileName === `${pathArr}tmp.tsx`){
-									fs.unlinkSync(fileName);
-								}
+								fs.unlinkSync(fileName);
+								// if(fileName === `${pathArr}tmp.tsx`){
+								// }
 							}
 						}
 						console.log(symbols.success, chalk.green('模版创建成功'));
